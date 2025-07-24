@@ -1,11 +1,13 @@
 pipeline{
     agent any
-  000000
+    triggers {
+        pollSCM('* * * * *')
+    }
     
         stages{
             stage('git checkout'){
                 steps{
-                    git credentialsId:'d88b1d45-5d52-4dc6-947f-b1ba3c4f45f4', url:'https://github.com/disikoX/TP-Junit.git'
+                    git credentialsId:'github-credentials4', url:'https://github.com/misafidiniaina/tp-junit.git'
                 }
             }
             
