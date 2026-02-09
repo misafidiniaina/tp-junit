@@ -15,7 +15,7 @@ pipeline {
         
         stage('Build the application') {
             steps {
-		echo "hello"
+		echo "Bonjour pipeline"
                 sh "mvn clean install"
             }
         }
