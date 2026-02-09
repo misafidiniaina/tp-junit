@@ -27,7 +27,23 @@ pipeline {
         
         stage('Build the docker image') {
             steps {
-                sh "docker build --tag misafidiniaina/tp-docker:1.0.0 ."
+                sh "docker build --tag misafidiniaina/tpjenkins:v1 ."
+            }
+        }
+        stage('Deploy to dockerhub'){
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login \
+                        -u "$DOCKER_USER" --password-stdin
+                    '''
+                }
+        
+                sh 'docker push misafidiniaina/tpjenkins:v1'
             }
         }
     }
